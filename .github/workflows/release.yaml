@@ -58,7 +58,7 @@ jobs:
         pnpm version ${{ inputs.releaseVersion }} --no-git-tag-version
         cd ../../
 
-    - name: Git: Commit Release Version
+    - name: Git - Commit Release Version
       run: |
         git add .
         git commit -m "version set to ${{ inputs.releaseVersion }} for release"
@@ -69,7 +69,7 @@ jobs:
     - name: Publish Packages
       run: pnpm publish --recursive --tag ${{ inputs.releaseVersion }}
 
-    - name: Git: Push Release Version
+    - name: Git - Push Release Version
       run: |
         git push
         git checkout -b ${{ inputs.releaseVersion }}
