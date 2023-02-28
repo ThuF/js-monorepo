@@ -58,9 +58,12 @@ jobs:
 
     - name: Update version
       run: |
+        pnpm version ${{ inputs.releaseVersion }} --no-git-tag-version
+
         cd packages/service-a
         pnpm version ${{ inputs.releaseVersion }} --no-git-tag-version
         cd ../../
+
         cd packages/service-b
         pnpm version ${{ inputs.releaseVersion }} --no-git-tag-version
         cd ../../
