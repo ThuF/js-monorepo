@@ -1,0 +1,22 @@
+{
+  "name": "@thuf/service-b",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/ThuF/js-monorepo.git",
+    "directory": "packages/service-b",
+    "type": "git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "uuid": "9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "9.0.0"
+  }
+}

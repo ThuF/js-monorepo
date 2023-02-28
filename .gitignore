@@ -1,0 +1,12 @@
+# Folders
+.vscode/
+node_modules/
+.turbo/
+coverage/
+build/
+cdk.out/
+
+# Files
+.DS_Store
+!jest.config.js
+*.d.ts

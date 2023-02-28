@@ -1,0 +1,16 @@
+{
+  "name": "@thuf/service-a",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/ThuF/js-monorepo.git",
+    "directory": "packages/service-b",
+    "type": "git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "build": "echo 'Build script to be added'",
+    "test": "echo 'Test script to be added'"
+  }
+}
