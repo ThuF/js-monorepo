@@ -70,10 +70,10 @@ jobs:
         git commit -m "version set to ${{ inputs.releaseVersion }} for release"
 
     - name: Create .npmrc
-      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_PACKAGES_AUTH_TOKEN }}" > .npmrc
+      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PACKAGES_AUTH_TOKEN }}" > .npmrc
 
     - name: Publish Packages
-      run: pnpm publish --recursive --tag ${{ inputs.releaseVersion }}
+      run: pnpm publish --recursive
 
     - name: Git - Push Release Version
       run: |
