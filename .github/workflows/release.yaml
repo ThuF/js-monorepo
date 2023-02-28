@@ -1,0 +1,77 @@
+name: Release
+
+on: workflow_dispatch
+  inputs:
+    releaseVersion:
+      required: true
+      type: string
+      default: 0.1.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+
+    - uses: pnpm/action-setup@v2
+      name: Install pnpm
+      id: pnpm-install
+      with:
+        version: 7
+        run_install: false
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+    - uses: actions/cache@v3
+      name: Setup pnpm cache
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: ${{ runner.os }}-pnpm-store-
+
+    - name: Run Build
+      run: pnpm run build
+
+    - name: "Configure Git"
+      run: |
+        git fetch
+        git checkout main
+        git config user.name "$GITHUB_ACTOR"
+        git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+    - name: Update version
+      run: |
+        cd packages/service-a
+        pnpm version ${{ inputs.releaseVersion }} --no-git-tag-version
+        cd ../../
+        cd packages/service-b
+        pnpm version ${{ inputs.releaseVersion }} --no-git-tag-version
+        cd ../../
+
+    - name: Git: Commit Release Version
+      run: |
+        git add .
+        git commit -m "version set to ${{ inputs.releaseVersion }} for release"
+
+    - name: Create .npmrc
+      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_PACKAGES_AUTH_TOKEN }}" > .npmrc
+
+    - name: Publish Packages
+      run: pnpm publish --recursive --tag ${{ inputs.releaseVersion }}
+
+    - name: Git: Push Release Version
+      run: |
+        git push
+        git checkout -b ${{ inputs.releaseVersion }}
+        git push origin ${{ inputs.releaseVersion }}
+        git checkout main
+        git push
