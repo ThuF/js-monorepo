@@ -10,3 +10,4 @@ cdk.out/
 .DS_Store
 !jest.config.js
 *.d.ts
+.npmrc
