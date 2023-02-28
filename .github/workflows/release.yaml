@@ -8,6 +8,8 @@ on:
         type: string
         default: 0.1.0
 
+run-name: "version set to ${{ inputs.releaseVersion }} for release"
+
 jobs:
   build:
     runs-on: ubuntu-latest
