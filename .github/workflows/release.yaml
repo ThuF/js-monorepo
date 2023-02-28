@@ -79,6 +79,18 @@ jobs:
     - name: Publish Packages
       run: pnpm publish --recursive
 
+    - name: "Create Release"
+      uses: softprops/action-gh-release@v1
+      with:
+        token: ${{ secrets.GH_TOKEN }}
+        tag_name: v${{ inputs.releaseVersion }}
+        name: ${{ inputs.releaseVersion }}
+        draft: false
+        prerelease: false
+        body: |
+          ## JS Monorepo - ${{ env.AION_VERSION }}
+          Hello World
+
     - name: Git - Push Release Version
       run: |
         git push
