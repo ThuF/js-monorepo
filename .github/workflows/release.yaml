@@ -1,11 +1,12 @@
 name: Release
 
-on: workflow_dispatch
-  inputs:
-    releaseVersion:
-      required: true
-      type: string
-      default: 0.1.0
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        required: true
+        type: string
+        default: 0.1.0
 
 jobs:
   build:
