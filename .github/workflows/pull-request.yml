@@ -15,3 +15,16 @@ jobs:
             **Hello ${{ env.TEST }}**
             🌏
             !
+  test2:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - run: |
+          export TEST=$(date)
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            **Hello World 2023**
+            🌏
+            !
