@@ -12,6 +12,6 @@ jobs:
       - uses: mshick/add-pr-comment@v2
         with:
           message: |
-            **Hello ${ env.TEST }**
+            **Hello ${{ env.TEST }}**
             🌏
             !
