@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    outputs:
+      TEST_OUTPUT: Eclipse Dirigible
     steps:
       - run: |
           export TEST=$(date)
@@ -25,6 +27,6 @@ jobs:
       - uses: mshick/add-pr-comment@v2
         with:
           message: |
-            **Hello World 2023**
+            **Hello World ${{ needs.test.outputs.TEST_OUTPUT }}**
             🌏
             !
